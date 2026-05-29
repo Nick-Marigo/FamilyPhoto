@@ -1,15 +1,15 @@
 class FamilyFaces extends Phaser.GameObjects.Sprite {
 
-    constructor(spritesheet, framerate){
+    constructor(spritesheet, timeBetweenFaces){
         super()
 
         this.spritesheet = spritesheet;
-        this.frameRate = framerate;
+        this.timeBetweenFaces = timeBetweenFaces;
 
         GenerateFacesWithFrameRate();
     }
 
-    GenerateFacesWithFrameRate(){
+    GenerateFacesWithFrameRate() {
 
     }
 

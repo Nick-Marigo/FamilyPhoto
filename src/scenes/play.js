@@ -10,10 +10,16 @@ class Play extends Phaser.Scene {
 
     create() {
         
+        this.cursor = this.input.keyboard.createCursorKeys();
+
     }
 
     update() {
         
+        if (this.cursor.space.isDown){
+            console.log("Space was pressed");
+        }
+
     }
 
 }

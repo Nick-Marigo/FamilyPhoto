@@ -25,7 +25,7 @@ let config = {
         mode: Phaser.Scale.NONE,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },*/
-    scene: [  ]
+    scene: [ Play ]
 }
 
 let width = config.width;

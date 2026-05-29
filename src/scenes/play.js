@@ -17,8 +17,18 @@ class Play extends Phaser.Scene {
 
     create() {
         
-        this.spriteArray = [];
+        this.facesArray = [];
         const faces = ['angry', 'blink', 'happy', 'neutral', 'sad'];
+
+        const facePositions = [
+            {x: 400, y: 300}
+        ];
+
+        let familyFace = []
+
+        for (let i = 0; i < 1; i++) {
+            familyFace.push(new FamilyFaces(this.scene, facePositions[i].x, facePositions[i].y, faces, 1000));
+        }
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 

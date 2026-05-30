@@ -7,10 +7,10 @@ let config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    //backgroundColor: '#FACADE',
-    /*render: {
+    backgroundColor: '#FACADE',
+    render: {
         pixelArt: true
-    },*/
+    },
     /*physics: {
         default: 'arcade',
         arcade: {

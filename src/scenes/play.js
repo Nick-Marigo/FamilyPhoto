@@ -27,7 +27,7 @@ class Play extends Phaser.Scene {
         let familyFace = []
 
         for (let i = 0; i < 1; i++) {
-            familyFace.push(new FamilyFaces(this.scene, facePositions[i].x, facePositions[i].y, faces, 1000));
+            familyFace.push(new FamilyFaces(this, facePositions[i].x, facePositions[i].y, faces[0], faces, 1000));
         }
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

@@ -16,17 +16,22 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+
+        let happyFaces = 0;
         
-        this.facesArray = [];
         const faces = ['angry', 'blink', 'happy', 'neutral', 'sad'];
 
         const facePositions = [
-            {x: 400, y: 300}
+            {x: 200, y: 300},
+            {x: 300, y: 300},
+            {x: 400, y: 300},
+            {x: 500, y: 300},
+            {x: 600, y: 300}
         ];
 
         let familyFace = []
 
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 5; i++) {
             familyFace.push(new FamilyFaces(this, facePositions[i].x, facePositions[i].y, faces[0], faces, 1000));
         }
 
@@ -34,6 +39,13 @@ class Play extends Phaser.Scene {
 
         this.spaceKey.on('up', (event) => {
             console.log("Space was pressed");
+            this.time.removeAllEvents();
+            for (let i = 0; i < 5; i++){
+                if (familyFace[i].getCurrentFace() == faces[2]){
+                    happyFaces++
+                }
+            }
+            console.log(happyFaces);
         });
 
     }

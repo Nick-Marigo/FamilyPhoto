@@ -20,11 +20,7 @@ class Play extends Phaser.Scene {
             {x: 117, y: 103}
         ].map(({x, y}) => ({x: x * 4 + 10, y: y * 4 + 10}));
 
-        this.familyFace = []
-
-        for (let i = 0; i < 5; i++) {
-            this.familyFace.push(new FamilyFaces(this, this.facePositions[i].x, this.facePositions[i].y, this.faces[0], this.faces, 1000));
-        }
+        this.familyFaces = this.facePositions.map(({x, y}) => new FamilyFace(this, x, y, this.faces[0], this.faces, 1000));
 
         this.score = this.add.text(width / 2, height - 550, 'Smiles Captured: 0', { 
             fontSize: '32px',
@@ -34,7 +30,7 @@ class Play extends Phaser.Scene {
         }).setOrigin(0.5).setVisible(false);
 
         this.events.on('smilesCaptured', (score) =>{
-            this.score.setText('Simles Captured: ' + score);
+            this.score.setText('Smiles Captured: ' + score);
         });
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -72,7 +68,7 @@ class Play extends Phaser.Scene {
         delay: 500,
         callback: this.countFaces,
         callbackScope: this,
-        repeat: this.familyFace.length - 1
+        repeat: this.familyFaces.length - 1
         });
 
         console.log(this.happyFaces);
@@ -80,7 +76,7 @@ class Play extends Phaser.Scene {
 
     countFaces() {
         
-        if (this.familyFace[this.index].getCurrentFace() == this.faces[2]){
+        if (this.familyFaces[this.index].getCurrentFace() == this.faces[2]){
             this.placeMarks(true, this.facePositions[this.index]);
             this.happyFaces++;
             this.events.emit('smilesCaptured', this.happyFaces);

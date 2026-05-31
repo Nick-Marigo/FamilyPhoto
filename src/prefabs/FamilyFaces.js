@@ -1,4 +1,4 @@
-class FamilyFaces extends Phaser.GameObjects.Sprite {
+class FamilyFace extends Phaser.GameObjects.Sprite {
 
     constructor(scene, x, y, texture, facesArray, timeBetweenFaces){
         super(scene, x, y, texture)

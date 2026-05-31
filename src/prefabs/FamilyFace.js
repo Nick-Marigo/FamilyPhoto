@@ -16,6 +16,8 @@ class FamilyFace extends Phaser.GameObjects.Sprite {
 
         this.gradeBox = scene.add.image(this.x, this.y, 'redBox').setAlpha(0.8).setScale(1.5).setVisible(false);
         this.gradeMark = scene.add.image(this.x, this.y - 25, 'xMark').setVisible(false);
+
+        this.graded = false;
     }
 
     createTimer() {
@@ -48,6 +50,8 @@ class FamilyFace extends Phaser.GameObjects.Sprite {
     }
 
     gradeFace() {
+        this.graded = true;
+
         const isHappy = this.getCurrentFace() === 'happy';
 
         if (isHappy) {
@@ -72,9 +76,11 @@ class FamilyFace extends Phaser.GameObjects.Sprite {
         return isHappy;
     }
 
-    hideGrade() {
+    reset() {
         this.gradeBox.setVisible(false);
         this.gradeMark.setVisible(false);
+        this.graded = false;
+        this.createTimer();
     }
 
 }

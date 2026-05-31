@@ -5,6 +5,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.isGradingFaces = false;
 
         this.add.image(0, 0, 'photo').setOrigin(0).setScale(4);
 
@@ -35,32 +36,34 @@ class Play extends Phaser.Scene {
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.spaceKey.on('up', (event) => {
-            console.log("Space was pressed");
-            this.time.removeAllEvents();
-            this.cameras.main.flash(1000, 255, 255, 255);
-            this.sound.play('cameraClick', { volume: 1 });
-            this.time.delayedCall( 1000, () => {
-                this.startCountingFaces();
-                this.score.setVisible(true)
-            })
-            
-        });
+        this.spaceKey.on('up', this.shootPhoto, this);
 
         // TOREMOVE: Debug key to restart scene instead of refreshing
         this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
-        this.rKey.on('up', (event) => {
-            this.scene.restart();
-        });
-
+        this.rKey.on('up', this.exitGrading, this);
     }
 
     update() {
 
     }
 
+    shootPhoto(event) {
+        console.log("Space was pressed");
+        if (this.isGradingFaces) {
+            return;
+        }
+        this.time.removeAllEvents();
+        this.cameras.main.flash(1000, 255, 255, 255);
+        this.sound.play('cameraClick', { volume: 1 });
+        this.time.delayedCall( 1000, () => {
+            this.startCountingFaces();
+            this.score.setVisible(true);
+        })
+    }
+
     startCountingFaces() {
+        this.isGradingFaces = true;
         this.familyFaces.forEach((faceObj, idx) => this.time.delayedCall(500 * (idx + 1), () => this.countFace(faceObj), this));
     }
 
@@ -71,6 +74,20 @@ class Play extends Phaser.Scene {
             this.events.emit('smilesCaptured', this.happyFaces);
         } else {
             this.sound.play('incorrect', { volume: 1 });
+        }
+    }
+
+    exitGrading(event) {
+        if (!this.isGradingFaces) {
+            return;
+        }
+
+        // Only allow player to exit grading if all delayed calls have completed
+        if (this.familyFaces.every(faceObj => faceObj.graded)) {
+            this.familyFaces.forEach(face => face.reset());
+            this.happyFaces = 0;
+            this.isGradingFaces = false;
+            this.score.setVisible(false);
         }
     }
 }

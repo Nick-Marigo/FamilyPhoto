@@ -49,11 +49,12 @@ class Play extends Phaser.Scene {
     }
 
     shootPhoto(event) {
-        console.log("Space was pressed");
         if (this.isGradingFaces) {
             return;
         }
+        this.isGradingFaces = true;
         this.time.removeAllEvents();
+        this.events.emit('smilesCaptured', 0);
         this.cameras.main.flash(1000, 255, 255, 255);
         this.sound.play('cameraClick', { volume: 1 });
         this.time.delayedCall( 1000, () => {
@@ -63,7 +64,6 @@ class Play extends Phaser.Scene {
     }
 
     startCountingFaces() {
-        this.isGradingFaces = true;
         this.familyFaces.forEach((faceObj, idx) => this.time.delayedCall(500 * (idx + 1), () => this.countFace(faceObj), this));
     }
 

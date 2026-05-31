@@ -34,7 +34,7 @@ class FamilyFaces extends Phaser.GameObjects.Sprite {
         this.setTexture(this.currentFace);
 
         this.faceSwapTimer.reset({
-            delay: Phaser.Math.Between(500, 3000),
+            delay: this.currentFace === this.facesArray[2] ? 5000 : Phaser.Math.Between(500, 3000), // Hold smile face slightly longer
             callback: this.swapFace,
             callbackScope: this,
             loop: false

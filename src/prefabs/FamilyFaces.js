@@ -42,7 +42,6 @@ class FamilyFaces extends Phaser.GameObjects.Sprite {
     }
 
     getCurrentFace(){
-        console.log(this.currentFace);
         return this.currentFace;
     }
 

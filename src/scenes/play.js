@@ -22,6 +22,7 @@ class Play extends Phaser.Scene {
         this.load.setPath("./Assets/Sounds")
         this.load.audio('correct', 'CorrectSound.wav');
         this.load.audio('incorrect', 'IncorrectSound.wav');
+        this.load.audio('cameraClick', 'Camera.wav');
 
     }
 
@@ -45,12 +46,29 @@ class Play extends Phaser.Scene {
             this.familyFace.push(new FamilyFaces(this, this.facePositions[i].x, this.facePositions[i].y, this.faces[0], this.faces, 1000));
         }
 
+        this.score = this.add.text(width / 2, height - 550, 'Smiles Captured: 0', { 
+            fontSize: '32px',
+            fontStyle: 'bold',
+            color: '#000000',
+            align: 'center'
+        }).setOrigin(0.5).setVisible(false);
+
+        this.events.on('smilesCaptured', (score) =>{
+            this.score.setText('Simles Captured: ' + score);
+        });
+
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.spaceKey.on('up', (event) => {
             console.log("Space was pressed");
             this.time.removeAllEvents();
-            this.startCountingFaces();
+            this.cameras.main.flash(1000, 255, 255, 255);
+            this.sound.play('cameraClick', { volume: 1 });
+            this.time.delayedCall( 1000, () => {
+                this.startCountingFaces();
+                this.score.setVisible(true)
+            })
+            
         });
 
         // TOREMOVE: Debug key to restart scene instead of refreshing
@@ -81,9 +99,11 @@ class Play extends Phaser.Scene {
     }
 
     countFaces() {
+        
         if (this.familyFace[this.index].getCurrentFace() == this.faces[2]){
             this.placeMarks(true, this.facePositions[this.index]);
             this.happyFaces++;
+            this.events.emit('smilesCaptured', this.happyFaces);
         } else {
             this.placeMarks(false, this.facePositions[this.index]);
         }

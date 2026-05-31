@@ -2,6 +2,8 @@
 
 // Sounds:
 // Correct and Incorrect sound: https://freesound.org/people/LaurenPonder/sounds/635643/
+// Camera sound: https://freesound.org/people/theplax/sounds/624937/
+
 
 
 "use strict"

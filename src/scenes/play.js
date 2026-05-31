@@ -6,22 +6,32 @@ class Play extends Phaser.Scene {
  
     preload() {
 
-        this.load.setPath("./assets/faces")
+        this.load.setPath("./assets/Faces");
         this.load.image('angry', 'face-angry.png');
         this.load.image('blink', 'face-blink.png');
         this.load.image('happy', 'face-happy.png');
         this.load.image('neutral', 'face-neutral.png');
         this.load.image('sad', 'face-sad.png');
 
+        this.load.setPath("./assets/CheckAndXMarks");
+        this.load.image('checkMark', 'CheckMark.png');
+        this.load.image('greenBox', 'GreenBox.png');
+        this.load.image('xMark', 'XMark.png');
+        this.load.image('redBox', 'RedBox.png');
+
+        this.load.setPath("./assets/Sounds")
+        this.load.audio('correct', 'CorrectSound.wav');
+        this.load.audio('incorrect', 'IncorrectSound.wav');
+
     }
 
     create() {
 
-        let happyFaces = 0;
+        this.happyFaces = 0;
         
-        const faces = ['angry', 'blink', 'happy', 'neutral', 'sad'];
+        this.faces = ['angry', 'blink', 'happy', 'neutral', 'sad'];
 
-        const facePositions = [
+        this.facePositions = [
             {x: 200, y: 300},
             {x: 300, y: 300},
             {x: 400, y: 300},
@@ -29,10 +39,10 @@ class Play extends Phaser.Scene {
             {x: 600, y: 300}
         ];
 
-        let familyFace = []
+        this.familyFace = []
 
         for (let i = 0; i < 5; i++) {
-            familyFace.push(new FamilyFaces(this, facePositions[i].x, facePositions[i].y, faces[0], faces, 1000));
+            this.familyFace.push(new FamilyFaces(this, this.facePositions[i].x, this.facePositions[i].y, this.faces[0], this.faces, 1000));
         }
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -40,17 +50,69 @@ class Play extends Phaser.Scene {
         this.spaceKey.on('up', (event) => {
             console.log("Space was pressed");
             this.time.removeAllEvents();
-            for (let i = 0; i < 5; i++){
-                if (familyFace[i].getCurrentFace() == faces[2]){
-                    happyFaces++
-                }
-            }
-            console.log(happyFaces);
+            this.startCountingFaces();
+        });
+
+        // TOREMOVE: Debug key to restart scene instead of refreshing
+        this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
+        this.rKey.on('up', (event) => {
+            this.scene.restart();
         });
 
     }
 
     update() {
+
+    }
+
+    startCountingFaces() {
+
+        this.index = 0;
+
+        this.time.addEvent({
+        delay: 500,
+        callback: this.countFaces,
+        callbackScope: this,
+        repeat: this.familyFace.length - 1
+        });
+
+        console.log(this.happyFaces);
+    }
+
+    countFaces() {
+        if (this.familyFace[this.index].getCurrentFace() == this.faces[2]){
+            this.placeMarks(true, this.facePositions[this.index]);
+            this.happyFaces++;
+        } else {
+            this.placeMarks(false, this.facePositions[this.index]);
+        }
+            
+        this.index++;
+    }
+
+    placeMarks(correct, facePosition) {
+
+        let mark;
+        let yOffSet = 25;
+
+        if (correct){
+            this.add.image(facePosition.x, facePosition.y, 'greenBox').setAlpha(0.8).setScale(1.5);
+            mark = this.add.image(facePosition.x, facePosition.y - yOffSet, 'checkMark');
+            this.sound.play('correct', { volume: 1 });
+        } else {
+            this.add.image(facePosition.x, facePosition.y, 'redBox').setAlpha(0.8).setScale(1.5);
+            mark = this.add.image(facePosition.x, facePosition.y - yOffSet, 'xMark');
+            this.sound.play('incorrect', { volume: 1 });
+        }
+
+        this.tweens.add({
+            targets: mark,
+            y: facePosition.y - yOffSet - 5,
+            duration: 50,
+            ease: 'linear',
+            yoyo: true,
+        })
 
     }
 

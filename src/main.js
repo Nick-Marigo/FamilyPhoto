@@ -1,4 +1,8 @@
-// Phaser 3.9 Template
+// Family Photo by Eric Wlech and Nick Marigo
+
+// Sounds:
+// Correct and Incorrect sound: https://freesound.org/people/LaurenPonder/sounds/635643/
+
 
 "use strict"
 
@@ -21,10 +25,10 @@ let config = {
             debug: false
         }
     },*/
-    /*scale: {
+    scale: {
         mode: Phaser.Scale.NONE,
         autoCenter: Phaser.Scale.CENTER_BOTH
-    },*/
+    },
     scene: [ Play ]
 }
 

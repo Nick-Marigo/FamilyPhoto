@@ -6,6 +6,9 @@ class Play extends Phaser.Scene {
  
     preload() {
 
+        this.load.setPath("./Assets");
+        this.load.image('photo', 'family-photo.png');
+
         this.load.setPath("./Assets/Faces");
         this.load.image('angry', 'face-angry.png');
         this.load.image('blink', 'face-blink.png');
@@ -28,17 +31,19 @@ class Play extends Phaser.Scene {
 
     create() {
 
+        this.add.image(0, 0, 'photo').setOrigin(0).setScale(4);
+
         this.happyFaces = 0;
         
         this.faces = ['angry', 'blink', 'happy', 'neutral', 'sad'];
 
         this.facePositions = [
-            {x: 200, y: 300},
-            {x: 300, y: 300},
-            {x: 400, y: 300},
-            {x: 500, y: 300},
-            {x: 600, y: 300}
-        ];
+            {x: 69, y: 62},
+            {x: 74, y: 87},
+            {x: 92, y: 64},
+            {x: 110, y: 68},
+            {x: 117, y: 103}
+        ].map(({x, y}) => ({x: x * 4 + 10, y: y * 4 + 10}));
 
         this.familyFace = []
 

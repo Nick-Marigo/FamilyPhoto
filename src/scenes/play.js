@@ -6,20 +6,20 @@ class Play extends Phaser.Scene {
  
     preload() {
 
-        this.load.setPath("./assets/Faces");
+        this.load.setPath("./Assets/Faces");
         this.load.image('angry', 'face-angry.png');
         this.load.image('blink', 'face-blink.png');
         this.load.image('happy', 'face-happy.png');
         this.load.image('neutral', 'face-neutral.png');
         this.load.image('sad', 'face-sad.png');
 
-        this.load.setPath("./assets/CheckAndXMarks");
+        this.load.setPath("./Assets/CheckAndXMarks");
         this.load.image('checkMark', 'CheckMark.png');
         this.load.image('greenBox', 'GreenBox.png');
         this.load.image('xMark', 'XMark.png');
         this.load.image('redBox', 'RedBox.png');
 
-        this.load.setPath("./assets/Sounds")
+        this.load.setPath("./Assets/Sounds")
         this.load.audio('correct', 'CorrectSound.wav');
         this.load.audio('incorrect', 'IncorrectSound.wav');
 

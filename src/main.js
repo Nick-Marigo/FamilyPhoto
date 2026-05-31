@@ -1,4 +1,4 @@
-// Family Photo by Eric Wlech and Nick Marigo
+// Family Photo by Eric Welch and Nick Marigo
 
 // Sounds:
 // Correct and Incorrect sound: https://freesound.org/people/LaurenPonder/sounds/635643/
@@ -32,7 +32,7 @@ let config = {
         mode: Phaser.Scale.NONE,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [ Play ]
+    scene: [ Initialize, Play ]
 }
 
 let width = config.width;

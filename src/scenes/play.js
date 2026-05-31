@@ -61,55 +61,16 @@ class Play extends Phaser.Scene {
     }
 
     startCountingFaces() {
-
-        this.index = 0;
-
-        this.time.addEvent({
-        delay: 500,
-        callback: this.countFaces,
-        callbackScope: this,
-        repeat: this.familyFaces.length - 1
-        });
-
-        console.log(this.happyFaces);
+        this.familyFaces.forEach((faceObj, idx) => this.time.delayedCall(500 * (idx + 1), () => this.countFace(faceObj), this));
     }
 
-    countFaces() {
-        
-        if (this.familyFaces[this.index].getCurrentFace() == this.faces[2]){
-            this.placeMarks(true, this.facePositions[this.index]);
+    countFace(faceObj) {
+        if (faceObj.gradeFace()) {
+            this.sound.play('correct', { volume: 1 });
             this.happyFaces++;
             this.events.emit('smilesCaptured', this.happyFaces);
         } else {
-            this.placeMarks(false, this.facePositions[this.index]);
-        }
-            
-        this.index++;
-    }
-
-    placeMarks(correct, facePosition) {
-
-        let mark;
-        let yOffSet = 25;
-
-        if (correct){
-            this.add.image(facePosition.x, facePosition.y, 'greenBox').setAlpha(0.8).setScale(1.5);
-            mark = this.add.image(facePosition.x, facePosition.y - yOffSet, 'checkMark');
-            this.sound.play('correct', { volume: 1 });
-        } else {
-            this.add.image(facePosition.x, facePosition.y, 'redBox').setAlpha(0.8).setScale(1.5);
-            mark = this.add.image(facePosition.x, facePosition.y - yOffSet, 'xMark');
             this.sound.play('incorrect', { volume: 1 });
         }
-
-        this.tweens.add({
-            targets: mark,
-            y: facePosition.y - yOffSet - 5,
-            duration: 50,
-            ease: 'linear',
-            yoyo: true,
-        })
-
     }
-
 }

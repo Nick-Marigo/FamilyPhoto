@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
         this.isGradingFaces = false;
 
         this.add.image(0, 0, 'photo').setOrigin(0).setScale(4);
+        this.cameraOverlay = this.add.image(0, 0, 'cameraOverlay').setOrigin(0).setScale(4).setAlpha(.7).setTint(0xE1E1E1);
 
         this.happyFaces = 0;
         
@@ -64,6 +65,7 @@ class Play extends Phaser.Scene {
             return;
         }
         this.isGradingFaces = true;
+        this.cameraOverlay.setVisible(false);
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.events.emit(EVENT_SMILE_CAPTURED, 0);
         this.cameras.main.flash(1000, 255, 255, 255);

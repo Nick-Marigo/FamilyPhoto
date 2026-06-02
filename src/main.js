@@ -6,7 +6,9 @@
 
 
 
-"use strict"
+'use strict';
+
+const urlQueryParams = new URLSearchParams(window.location.search);
 
 let config = {
     //parent: 'game',
@@ -32,10 +34,10 @@ let config = {
         mode: Phaser.Scale.NONE,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [ Initialize, Play ]
+    scene: [ new Initialize(urlQueryParams.get('mode')), MainMenu, Play, Credits ]
 }
 
 let width = config.width;
 let height = config.height;
 
-let game = new Phaser.Game(config)
+let game = new Phaser.Game(config);

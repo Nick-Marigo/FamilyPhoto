@@ -1,10 +1,16 @@
+const EVENT_SMILE_CAPTURED = 'smileCaptured';
+
 class Play extends Phaser.Scene {
 
     constructor() {
         super('playScene');
+        this.playtimeMillisec = 5 * 1000;
     }
 
     create() {
+        this.isGameOver = false;
+        this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
+
         this.isGradingFaces = false;
 
         this.add.image(0, 0, 'photo').setOrigin(0).setScale(4);
@@ -30,9 +36,7 @@ class Play extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5).setVisible(false);
 
-        this.events.on('smilesCaptured', (score) =>{
-            this.score.setText('Smiles Captured: ' + score);
-        });
+        this.events.on(EVENT_SMILE_CAPTURED, this.onSmileCaptured, this);
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -45,18 +49,23 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // console.log(`Time remaining ${this.gameTimer.getRemaining()}`)
+    }
 
+    onSmileCaptured() {
+        this.score.setText(`Smiles Captured: ${this.happyFaces}`);
     }
 
     shootPhoto(event) {
-        if (this.isGradingFaces) {
+        if (this.isGradingFaces || this.isGameOver) {
             return;
         }
         this.isGradingFaces = true;
-        this.time.removeAllEvents();
-        this.events.emit('smilesCaptured', 0);
+        this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
+        this.events.emit(EVENT_SMILE_CAPTURED, 0);
         this.cameras.main.flash(1000, 255, 255, 255);
         this.sound.play('cameraClick', { volume: 1 });
+        this.gameTimer.paused = true;
         this.time.delayedCall( 1000, () => {
             this.startCountingFaces();
             this.score.setVisible(true);
@@ -71,23 +80,33 @@ class Play extends Phaser.Scene {
         if (faceObj.gradeFace()) {
             this.sound.play('correct', { volume: 1 });
             this.happyFaces++;
-            this.events.emit('smilesCaptured', this.happyFaces);
+            this.events.emit(EVENT_SMILE_CAPTURED);
         } else {
             this.sound.play('incorrect', { volume: 1 });
         }
     }
 
     exitGrading(event) {
-        if (!this.isGradingFaces) {
+        // Only allow player to exit grading if all delayed calls have completed
+        if (!(this.isGradingFaces && this.isFinishedGradingFaces())) {
             return;
         }
 
-        // Only allow player to exit grading if all delayed calls have completed
-        if (this.familyFaces.every(faceObj => faceObj.graded)) {
-            this.familyFaces.forEach(face => face.reset());
-            this.happyFaces = 0;
-            this.isGradingFaces = false;
-            this.score.setVisible(false);
-        }
+        this.familyFaces.forEach(face => face.reset());
+        this.happyFaces = 0;
+        this.isGradingFaces = false;
+        this.score.setVisible(false);
+        this.gameTimer.paused = false;
     }
+
+    isFinishedGradingFaces() {
+        return this.familyFaces.every(faceObj => faceObj.graded);
+    }
+
+    setGameOver() {
+        this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
+        this.isGameOver = true;
+        console.log('Game over!');
+    }
+
 }

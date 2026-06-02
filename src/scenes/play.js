@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
 
         this.events.on(EVENT_SMILE_CAPTURED, this.onSmileCaptured, this);
 
-        let timer = new Timer(this, 50, 50, 10, 30);
+        this.progressRing = new Ring(this, 30, 30, 35); // scene, x, y, radius
 
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -51,7 +51,8 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        console.log(`Time remaining ${this.getTimerSecondsRemaining()}`)
+        //console.log(`Time remaining ${this.getTimePercentRemaining()}`)
+        this.progressRing.drawProgressRing();
     }
 
     onSmileCaptured() {

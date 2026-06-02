@@ -51,7 +51,6 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        //console.log(`Time remaining ${this.getTimePercentRemaining()}`)
         this.progressRing.drawProgressRing();
     }
 

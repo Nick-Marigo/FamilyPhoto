@@ -11,6 +11,9 @@ class Play extends Phaser.Scene {
         this.isGameOver = false;
         this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
 
+        const sayCheeseDelay = Math.floor(Phaser.Math.Between(this.playtimeMillisec * 0.4, this.playtimeMillisec * 0.8));
+        this.guaranteedSmileTimer = this.time.delayedCall(sayCheeseDelay, this.sayCheese, null, this);
+
         this.isGradingFaces = false;
 
         this.add.image(0, 0, 'photo').setOrigin(0).setScale(4);
@@ -37,6 +40,13 @@ class Play extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5).setVisible(false);
 
+        this.sayCheeseText = this.add.text(width / 2, height - 550, 'Say cheese!', {
+            fontSize: '32px',
+            fontStyle: 'bold',
+            color: '#000000',
+            align: 'center'
+        }).setOrigin(0.5).setVisible(false);
+
         this.events.on(EVENT_SMILE_CAPTURED, this.onSmileCaptured, this);
 
         this.progressRing = new Ring(this, 30, 30, 35); // scene, x, y, radius
@@ -55,6 +65,24 @@ class Play extends Phaser.Scene {
         this.progressRing.drawProgressRing();
     }
 
+    sayCheese() {
+        this.sayCheeseText.setVisible(true);
+
+        this.guaranteedSmileTimer = this.time.delayedCall(3000, this.hideSayCheese, null, this);
+    }
+
+    hideSayCheese() {
+        this.sayCheeseText.setVisible(false);
+
+        this.guaranteedSmileTimer = this.time.delayedCall(Phaser.Math.Between(500, 2000), this.everybodySmile, null, this);
+    }
+
+    everybodySmile() {
+        this.familyFaces.forEach(faceObj => {
+            this.time.delayedCall(Phaser.Math.Between(100, 750), faceObj.sayCheese, null, faceObj);
+        });
+    }
+
     onSmileCaptured() {
         this.score.setText(`Smiles Captured: ${this.happyFaces}`);
     }
@@ -65,11 +93,13 @@ class Play extends Phaser.Scene {
         }
         this.isGradingFaces = true;
         this.cameraOverlay.setVisible(false);
+        this.guaranteedSmileTimer.paused = true;
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.events.emit(EVENT_SMILE_CAPTURED, 0);
         this.cameras.main.flash(1000, 255, 255, 255);
         this.sound.play('cameraClick', { volume: 1 });
         this.gameTimer.paused = true;
+        this.sayCheeseText.setVisible(false);
         this.time.delayedCall( 1000, () => {
             this.startCountingFaces();
             this.score.setVisible(true);
@@ -101,6 +131,7 @@ class Play extends Phaser.Scene {
         this.isGradingFaces = false;
         this.score.setVisible(false);
         this.gameTimer.paused = false;
+        this.guaranteedSmileTimer.paused = false;
     }
 
     isFinishedGradingFaces() {
@@ -110,6 +141,7 @@ class Play extends Phaser.Scene {
     setGameOver() {
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.isGameOver = true;
+        this.guaranteedSmileTimer.paused = true;
         console.log('Game over!');
     }
 

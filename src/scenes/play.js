@@ -19,6 +19,11 @@ class Play extends Phaser.Scene {
         this.add.image(0, 0, 'photo').setOrigin(0).setScale(4);
         this.cameraOverlay = this.add.image(0, 0, 'cameraOverlay').setOrigin(0).setScale(4).setAlpha(.7).setTint(0xE1E1E1);
 
+        this.shutterGraphic = this.add.image(...canvasPos(0.0, -1.0), '__WHITE');
+        this.shutterGraphic.setOrigin(0);
+        this.shutterGraphic.setDisplaySize(...canvasPos(1.0));
+        this.shutterGraphic.setTint(0x00_00_00);
+
         this.happyFaces = 0;
         
         this.faces = ['angry', 'blink', 'happy', 'neutral', 'sad'];
@@ -87,6 +92,17 @@ class Play extends Phaser.Scene {
         this.score.setText(`Smiles Captured: ${this.happyFaces}`);
     }
 
+    cameraSnapEffects() {
+        this.cameras.main.flash(1000, 255, 255, 255);
+        this.tweens.add({
+            targets: this.shutterGraphic,
+            y: 0,
+            duration: 60,
+            ease: 'linear',
+            yoyo: true,
+        });
+    }
+
     shootPhoto(event) {
         if (this.isGradingFaces || this.isGameOver) {
             return;
@@ -95,8 +111,8 @@ class Play extends Phaser.Scene {
         this.cameraOverlay.setVisible(false);
         this.guaranteedSmileTimer.paused = true;
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
+        this.cameraSnapEffects();
         this.events.emit(EVENT_SMILE_CAPTURED, 0);
-        this.cameras.main.flash(1000, 255, 255, 255);
         this.sound.play('cameraClick', { volume: 1 });
         this.gameTimer.paused = true;
         this.sayCheeseText.setVisible(false);

@@ -4,7 +4,7 @@ class Play extends Phaser.Scene {
 
     constructor() {
         super('playScene');
-        this.playtimeMillisec = 5 * 1000;
+        this.playtimeMillisec = 30 * 1000;
     }
 
     create() {

@@ -38,6 +38,8 @@ class Play extends Phaser.Scene {
 
         this.events.on(EVENT_SMILE_CAPTURED, this.onSmileCaptured, this);
 
+        let timer = new Timer(this, 50, 50, 10, 30);
+
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.spaceKey.on('up', this.shootPhoto, this);

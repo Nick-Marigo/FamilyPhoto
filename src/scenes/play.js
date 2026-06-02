@@ -51,7 +51,7 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        // console.log(`Time remaining ${this.gameTimer.getRemaining()}`)
+        console.log(`Time remaining ${this.getTimerSecondsRemaining()}`)
     }
 
     onSmileCaptured() {
@@ -109,6 +109,10 @@ class Play extends Phaser.Scene {
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.isGameOver = true;
         console.log('Game over!');
+    }
+
+    getTimePercentRemaining() {
+        return this.gameTimer.getRemaining() / this.playtimeMillisec;
     }
 
 }

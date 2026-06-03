@@ -76,6 +76,18 @@ class FamilyFace extends Phaser.GameObjects.Sprite {
         return isHappy;
     }
 
+    sayCheese() {
+        this.currentFace = 'happy';
+        this.setTexture(this.currentFace);
+
+        this.faceSwapTimer.reset({
+            delay: Phaser.Math.Between(1500, 3000),
+            callback: this.swapFace,
+            callbackScope: this,
+            loop: false
+        });
+    }
+
     reset() {
         this.gradeBox.setVisible(false);
         this.gradeMark.setVisible(false);

@@ -112,11 +112,8 @@ class Play extends Phaser.Scene {
         }
         this.isGradingFaces = true;
         this.cameraOverlay.setVisible(false);
-<<<<<<< Updated upstream
-=======
         this.progressRing.setVisible(false);
         this.guaranteedSmileTimer.paused = true;
->>>>>>> Stashed changes
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.cameraSnapEffects();
         this.events.emit(EVENT_SMILE_CAPTURED, 0);
@@ -155,14 +152,11 @@ class Play extends Phaser.Scene {
         this.isGradingFaces = false;
         this.score.setVisible(false);
         this.gameTimer.paused = false;
-<<<<<<< Updated upstream
-=======
         this.guaranteedSmileTimer.paused = false;
         this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
         this.cameraOverlay.setVisible(true);
         this.progressRing.setVisible(true);
         this.showButtons(false);
->>>>>>> Stashed changes
     }
 
     isFinishedGradingFaces() {

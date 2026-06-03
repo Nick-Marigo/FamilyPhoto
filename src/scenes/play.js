@@ -52,6 +52,13 @@ class Play extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5).setVisible(false);
 
+        this.takePictureText = this.add.text(width / 2, height - 20, 'Press space to take the picture!', {
+            fontSize: '32px',
+            fontStyle: 'bold',
+            color: '#000000',
+            align: 'center'
+        }).setOrigin(0.5);
+
         this.events.on(EVENT_SMILE_CAPTURED, this.onSmileCaptured, this);
 
         this.progressRing = new Ring(this, 30, 30, 35); // scene, x, y, radius
@@ -120,6 +127,7 @@ class Play extends Phaser.Scene {
         this.sound.play('cameraClick', { volume: 1 });
         this.gameTimer.paused = true;
         this.sayCheeseText.setVisible(false);
+        this.takePictureText.setVisible(false);
         this.time.delayedCall( 1000, () => {
             this.startCountingFaces();
             this.score.setVisible(true);
@@ -128,7 +136,7 @@ class Play extends Phaser.Scene {
 
     startCountingFaces() {
         this.familyFaces.forEach((faceObj, idx) => this.time.delayedCall(500 * (idx + 1), () => this.countFace(faceObj), this));
-        this.time.delayedCall(5000, this.showButtons(), [true], this);
+        this.time.delayedCall(5000, this.showButtons, [true], this);
     }
 
     countFace(faceObj) {
@@ -156,6 +164,7 @@ class Play extends Phaser.Scene {
         this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
         this.cameraOverlay.setVisible(true);
         this.progressRing.setVisible(true);
+        this.takePictureText.setVisible(true);
         this.showButtons(false);
     }
 
@@ -175,7 +184,6 @@ class Play extends Phaser.Scene {
     }
 
     showButtons(show) {
-        console.log('showing buttons: ' + show);
         this.tryAgainButton.setVisible(show);
         this.mainMenuButton.setVisible(show);
     }

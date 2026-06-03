@@ -49,6 +49,9 @@ class Play extends Phaser.Scene {
         this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.rKey.on('up', this.exitGrading, this);
+
+        this.createTryAgainButton();
+        this.createExitButton();
     }
 
     update() {
@@ -65,6 +68,11 @@ class Play extends Phaser.Scene {
         }
         this.isGradingFaces = true;
         this.cameraOverlay.setVisible(false);
+<<<<<<< Updated upstream
+=======
+        this.progressRing.setVisible(false);
+        this.guaranteedSmileTimer.paused = true;
+>>>>>>> Stashed changes
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.events.emit(EVENT_SMILE_CAPTURED, 0);
         this.cameras.main.flash(1000, 255, 255, 255);
@@ -78,6 +86,7 @@ class Play extends Phaser.Scene {
 
     startCountingFaces() {
         this.familyFaces.forEach((faceObj, idx) => this.time.delayedCall(500 * (idx + 1), () => this.countFace(faceObj), this));
+        this.time.delayedCall(5000, this.showButtons(), [true], this);
     }
 
     countFace(faceObj) {
@@ -101,6 +110,14 @@ class Play extends Phaser.Scene {
         this.isGradingFaces = false;
         this.score.setVisible(false);
         this.gameTimer.paused = false;
+<<<<<<< Updated upstream
+=======
+        this.guaranteedSmileTimer.paused = false;
+        this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
+        this.cameraOverlay.setVisible(true);
+        this.progressRing.setVisible(true);
+        this.showButtons(false);
+>>>>>>> Stashed changes
     }
 
     isFinishedGradingFaces() {
@@ -115,6 +132,42 @@ class Play extends Phaser.Scene {
 
     getTimePercentRemaining() {
         return this.gameTimer.getRemaining() / this.playtimeMillisec;
+    }
+
+    showButtons(show) {
+        console.log('showing buttons: ' + show);
+        this.tryAgainButton.setVisible(show);
+        this.mainMenuButton.setVisible(show);
+    }
+
+    createTryAgainButton() {
+        const buttonTextStyle = {
+            fontSize: '32px',
+            fontFamily: 'Helvetica', // FIXME customize font
+            color: '#000',
+            align: 'center',
+            padding: 4
+        };
+
+        this.tryAgainButton = this.createButton('Try Again', ...canvasPos(0.5, 0.8), buttonTextStyle, this.exitGrading);
+        this.tryAgainButton.setVisible(false);
+    }
+
+    createExitButton() {
+        const buttonTextStyle = {
+            fontSize: '32px',
+            fontFamily: 'Helvetica', // FIXME customize font
+            color: '#000',
+            align: 'center',
+            padding: 4
+        };
+
+        this.mainMenuButton = this.createButton('Back to Main Menu', ...canvasPos(0.5, 0.9), buttonTextStyle, this.exitCredits);
+        this.mainMenuButton.setVisible(false);
+    }
+
+    exitCredits() {
+        this.scene.start('mainMenuScene');
     }
 
 }

@@ -12,6 +12,8 @@ class Play extends Phaser.Scene {
         this.isGameOver = false;
         this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
 
+        this.highscore = 0;
+
         const sayCheeseDelay = Math.floor(Phaser.Math.Between(this.playtimeMillisec * 0.4, this.playtimeMillisec * 0.8));
         this.guaranteedSmileTimer = this.time.delayedCall(sayCheeseDelay, this.sayCheese, null, this);
 
@@ -149,6 +151,7 @@ class Play extends Phaser.Scene {
         }
 
         if (this.isFinishedGradingFaces()) {
+            this.highscore = Math.max(this.happyFaces, this.highscore);
             this.time.delayedCall(1500, () => this.events.emit(EVENT_FINISHED_GRADING), null, this);
         }
     }
@@ -179,6 +182,7 @@ class Play extends Phaser.Scene {
         this.guaranteedSmileTimer.paused = true;
         this.time.delayedCall(1000, this.showButtons, [true], this);
         this.gameOverText.setVisible(true);
+        this.gameOverText.text += `\nMost smiles: ${this.highscore}`;
         console.log('Game over!');
     }
 

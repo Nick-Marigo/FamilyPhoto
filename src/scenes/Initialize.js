@@ -37,6 +37,8 @@ class Initialize extends Phaser.Scene {
     }
 
     create() {
+        this.sound.play('backgroundMusic', { volume: 0.3, loop: true });
+
         this.scene.start(this.queryMode);
     }
 

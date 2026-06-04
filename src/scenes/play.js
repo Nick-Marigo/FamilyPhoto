@@ -1,4 +1,5 @@
 const EVENT_SMILE_CAPTURED = 'smileCaptured';
+const EVENT_FINISHED_GRADING = 'finishedGrading';
 
 class Play extends Phaser.Scene {
 
@@ -59,18 +60,19 @@ class Play extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5);
 
+        this.gameOverText = this.add.text(width / 2, height - 550, 'Game over!', {
+            fontSize: '32px',
+            fontStyle: 'bold',
+            color: '#000000',
+            align: 'center'
+        }).setOrigin(0.5).setVisible(false);
+
         this.events.on(EVENT_SMILE_CAPTURED, this.onSmileCaptured, this);
+        this.events.on(EVENT_FINISHED_GRADING, this.exitGrading, this);
 
         this.progressRing = new Ring(this, 30, 30, 35); // scene, x, y, radius
 
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-        this.spaceKey.on('up', this.shootPhoto, this);
-
-        // TOREMOVE: Debug key to restart scene instead of refreshing
-        this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-
-        this.rKey.on('up', this.exitGrading, this);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE).on('up', this.shootPhoto, this);
 
         this.createTryAgainButton();
         this.createExitButton();
@@ -119,7 +121,6 @@ class Play extends Phaser.Scene {
         }
         this.isGradingFaces = true;
         this.cameraOverlay.setVisible(false);
-        this.progressRing.setVisible(false);
         this.guaranteedSmileTimer.paused = true;
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.cameraSnapEffects();
@@ -136,7 +137,6 @@ class Play extends Phaser.Scene {
 
     startCountingFaces() {
         this.familyFaces.forEach((faceObj, idx) => this.time.delayedCall(500 * (idx + 1), () => this.countFace(faceObj), this));
-        this.time.delayedCall(5000, this.showButtons, [true], this);
     }
 
     countFace(faceObj) {
@@ -147,9 +147,13 @@ class Play extends Phaser.Scene {
         } else {
             this.sound.play('incorrect', { volume: 1 });
         }
+
+        if (this.isFinishedGradingFaces()) {
+            this.time.delayedCall(1500, () => this.events.emit(EVENT_FINISHED_GRADING), null, this);
+        }
     }
 
-    exitGrading(event) {
+    exitGrading() {
         // Only allow player to exit grading if all delayed calls have completed
         if (!(this.isGradingFaces && this.isFinishedGradingFaces())) {
             return;
@@ -161,10 +165,7 @@ class Play extends Phaser.Scene {
         this.score.setVisible(false);
         this.gameTimer.paused = false;
         this.guaranteedSmileTimer.paused = false;
-        this.gameTimer = this.time.delayedCall(this.playtimeMillisec, this.setGameOver, null, this);
         this.cameraOverlay.setVisible(true);
-        this.progressRing.setVisible(true);
-        this.takePictureText.setVisible(true);
         this.showButtons(false);
     }
 
@@ -176,6 +177,8 @@ class Play extends Phaser.Scene {
         this.familyFaces.forEach(face => face.faceSwapTimer.paused = true);
         this.isGameOver = true;
         this.guaranteedSmileTimer.paused = true;
+        this.time.delayedCall(1000, this.showButtons, [true], this);
+        this.gameOverText.setVisible(true);
         console.log('Game over!');
     }
 
@@ -210,11 +213,11 @@ class Play extends Phaser.Scene {
             padding: 4
         };
 
-        this.mainMenuButton = this.createButton('Back to Main Menu', ...canvasPos(0.5, 0.9), buttonTextStyle, this.exitCredits);
+        this.mainMenuButton = this.createButton('Back to Main Menu', ...canvasPos(0.5, 0.9), buttonTextStyle, this.exitScene);
         this.mainMenuButton.setVisible(false);
     }
 
-    exitCredits() {
+    exitScene() {
         this.scene.start('mainMenuScene');
     }
 

@@ -8,6 +8,12 @@ class MainMenu extends Phaser.Scene {
         this.createTitle();
 
         this.createMenuButtons();
+
+        this.backgroundMusic = this.sound.add ('backgroundMusic', { volume: 0.3, loop: true });
+
+        if (!this.backgroundMusic.isPlaying) {
+            this.backgroundMusic.play();
+        }
     }
 
     createTitle() {

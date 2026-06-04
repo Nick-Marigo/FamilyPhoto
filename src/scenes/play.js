@@ -86,7 +86,7 @@ class Play extends Phaser.Scene {
 
     sayCheese() {
         this.sayCheeseText.setVisible(true);
-
+        this.sound.play('sayCheese', { volume: 1, seek: 0.8});
         this.guaranteedSmileTimer = this.time.delayedCall(3000, this.hideSayCheese, null, this);
     }
 
@@ -97,6 +97,7 @@ class Play extends Phaser.Scene {
     }
 
     everybodySmile() {
+        this.sound.play('cheese', { volume: 1, seek: 2.0 });
         this.familyFaces.forEach(faceObj => {
             this.time.delayedCall(Phaser.Math.Between(100, 750), faceObj.sayCheese, null, faceObj);
         });

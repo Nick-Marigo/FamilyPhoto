@@ -30,6 +30,9 @@ class Initialize extends Phaser.Scene {
         this.load.audio('correct', 'CorrectSound.wav');
         this.load.audio('incorrect', 'IncorrectSound.wav');
         this.load.audio('cameraClick', 'Camera.wav');
+        this.load.audio('sayCheese', 'SayCheese.m4a');
+        this.load.audio('cheese', 'Cheese.m4a');
+        this.load.audio('backgroundMusic', 'BackgroundMusic.mp3');
 
     }
 

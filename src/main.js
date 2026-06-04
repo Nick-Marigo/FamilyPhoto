@@ -5,15 +5,13 @@
 // Camera sound: https://freesound.org/people/theplax/sounds/624937/
 // Background Music: https://freesound.org/people/JonLakeMusic/sounds/767358/
 
-
-
+//Fonts: Vito Bold: https://www.dafont.com/vito-bold.font
 
 'use strict';
 
 const urlQueryParams = new URLSearchParams(window.location.search);
 
 let config = {
-    //parent: 'game',
     canvasStyle: 'display: block;',
     type: Phaser.AUTO,
     width: 800,
@@ -23,16 +21,6 @@ let config = {
     render: {
         pixelArt: true
     },
-    /*physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { 
-                x: 0,
-                y: 0,
-            },
-            debug: false
-        }
-    },*/
     scene: [ new Initialize(urlQueryParams.get('mode')), MainMenu, Play, Credits ]
 }
 

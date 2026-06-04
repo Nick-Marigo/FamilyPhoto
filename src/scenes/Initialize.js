@@ -27,13 +27,16 @@ class Initialize extends Phaser.Scene {
         this.load.image('xMark', 'XMark.png');
         this.load.image('redBox', 'RedBox.png');
 
-        this.load.setPath("./Assets/Sounds")
+        this.load.setPath("./Assets/Sounds");
         this.load.audio('correct', 'CorrectSound.wav');
         this.load.audio('incorrect', 'IncorrectSound.wav');
         this.load.audio('cameraClick', 'Camera.wav');
         this.load.audio('sayCheese', 'SayCheese.m4a');
         this.load.audio('cheese', 'Cheese.m4a');
         this.load.audio('backgroundMusic', 'BackgroundMusic.mp3');
+
+        this.load.setPath("./Assets/Fonts");
+        this.load.font('Vito_bold', 'VitoBold.otf', 'opentype');        
 
     }
 

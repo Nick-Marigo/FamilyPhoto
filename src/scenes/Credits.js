@@ -19,11 +19,11 @@ class Credits extends Phaser.Scene {
     }
 
     createTitle() {
-        const textPos = canvasPos(0.5, 0.475);
+        const textPos = canvasPos(0.5, 0.4);
 
         const headerStyle = {
             fontSize: '80px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_bold', // FIXME customize font
             color: '#000',
             align: 'center'
         };
@@ -33,7 +33,7 @@ class Credits extends Phaser.Scene {
 
         const authorsStyle = {
             fontSize: '64px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_bold', // FIXME customize font
             color: '#000',
             align: 'center'
         };
@@ -45,7 +45,7 @@ class Credits extends Phaser.Scene {
     createExitButton() {
         const buttonTextStyle = {
             fontSize: '48px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_bold', // FIXME customize font
             color: '#000',
             align: 'center',
             padding: 4

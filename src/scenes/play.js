@@ -43,6 +43,7 @@ class Play extends Phaser.Scene {
 
         this.score = this.add.text(width / 2, height - 550, 'Smiles Captured: 0', { 
             fontSize: '32px',
+            fontFamily: 'Vito_bold',
             fontStyle: 'bold',
             color: '#000000',
             align: 'center'
@@ -50,6 +51,7 @@ class Play extends Phaser.Scene {
 
         this.sayCheeseText = this.add.text(width / 2, height - 550, 'Say cheese!', {
             fontSize: '32px',
+            fontFamily: 'Vito_bold',
             fontStyle: 'bold',
             color: '#000000',
             align: 'center'
@@ -57,6 +59,7 @@ class Play extends Phaser.Scene {
 
         this.takePictureText = this.add.text(width / 2, height - 20, 'Press space to take the picture!', {
             fontSize: '32px',
+            fontFamily: 'Vito_bold',
             fontStyle: 'bold',
             color: '#000000',
             align: 'center'
@@ -64,6 +67,7 @@ class Play extends Phaser.Scene {
 
         this.gameOverText = this.add.text(width / 2, height - 550, 'Game over!', {
             fontSize: '32px',
+            fontFamily: 'Vito_bold',
             fontStyle: 'bold',
             color: '#000000',
             align: 'center'
@@ -199,7 +203,7 @@ class Play extends Phaser.Scene {
     createTryAgainButton() {
         const buttonTextStyle = {
             fontSize: '32px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_Bold', // FIXME customize font
             color: '#000',
             align: 'center',
             padding: 4
@@ -212,7 +216,7 @@ class Play extends Phaser.Scene {
     createExitButton() {
         const buttonTextStyle = {
             fontSize: '32px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_Bold', // FIXME customize font
             color: '#000',
             align: 'center',
             padding: 4

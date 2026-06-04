@@ -15,19 +15,19 @@ class MainMenu extends Phaser.Scene {
     createTitle() {
         const titleStyle = {
             fontSize: '96px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_bold', // FIXME customize font
             color: '#000',
             align: 'center'
         };
 
-        this.titleText = this.add.text(...canvasPos(0.5), 'The Family Photo', titleStyle)
+        this.titleText = this.add.text(...canvasPos(0.5, 0.35), 'The Family\nPhoto', titleStyle)
         this.titleText.setOrigin(0.5);
     }
 
     createMenuButtons() {
         const buttonTextStyle = {
             fontSize: '48px',
-            fontFamily: 'Helvetica', // FIXME customize font
+            fontFamily: 'Vito_bold', // FIXME customize font
             color: '#000',
             align: 'center',
             padding: 4

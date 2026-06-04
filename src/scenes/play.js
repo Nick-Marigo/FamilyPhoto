@@ -86,7 +86,7 @@ class Play extends Phaser.Scene {
 
     sayCheese() {
         this.sayCheeseText.setVisible(true);
-        this.sound.play('sayCheese', { volume: 1, seek: 0.8});
+        this.sound.play('sayCheese', { volume: 2.0, seek: 0.5});
         this.guaranteedSmileTimer = this.time.delayedCall(3000, this.hideSayCheese, null, this);
     }
 

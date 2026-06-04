@@ -11,18 +11,20 @@ class Credits extends Phaser.Scene {
     }
 
     create() {
+        this.add.image(0, 0, 'background').setOrigin(0).setScale(4);
+
         this.createTitle();
 
         this.createExitButton();
     }
 
     createTitle() {
-        const textPos = canvasPos(0.5, 0.25);
+        const textPos = canvasPos(0.5, 0.475);
 
         const headerStyle = {
-            fontSize: '64px',
+            fontSize: '80px',
             fontFamily: 'Helvetica', // FIXME customize font
-            color: '#FFF',
+            color: '#000',
             align: 'center'
         };
 
@@ -30,9 +32,9 @@ class Credits extends Phaser.Scene {
         this.headerText.setOrigin(0.5, 1.0);
 
         const authorsStyle = {
-            fontSize: '32px',
+            fontSize: '64px',
             fontFamily: 'Helvetica', // FIXME customize font
-            color: '#FFF',
+            color: '#000',
             align: 'center'
         };
 
@@ -42,7 +44,7 @@ class Credits extends Phaser.Scene {
 
     createExitButton() {
         const buttonTextStyle = {
-            fontSize: '32px',
+            fontSize: '48px',
             fontFamily: 'Helvetica', // FIXME customize font
             color: '#000',
             align: 'center',

@@ -8,6 +8,7 @@ class Initialize extends Phaser.Scene {
     preload() {
 
         this.load.setPath("./Assets");
+        this.load.image('background', 'background.png');
         this.load.image('photo', 'family-photo.png');
 
         this.load.setPath("./Assets/Camera");

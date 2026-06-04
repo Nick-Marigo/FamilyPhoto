@@ -205,7 +205,7 @@ class Play extends Phaser.Scene {
             padding: 4
         };
 
-        this.tryAgainButton = this.createButton('Try Again', ...canvasPos(0.5, 0.8), buttonTextStyle, this.exitGrading);
+        this.tryAgainButton = this.createButton('Try Again', ...canvasPos(0.5, 0.8), buttonTextStyle, this.restartScene);
         this.tryAgainButton.setVisible(false);
     }
 
@@ -220,6 +220,10 @@ class Play extends Phaser.Scene {
 
         this.mainMenuButton = this.createButton('Back to Main Menu', ...canvasPos(0.5, 0.9), buttonTextStyle, this.exitScene);
         this.mainMenuButton.setVisible(false);
+    }
+
+    restartScene() {
+        this.scene.restart();
     }
 
     exitScene() {

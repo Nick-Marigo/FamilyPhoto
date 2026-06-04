@@ -14,6 +14,7 @@ const urlQueryParams = new URLSearchParams(window.location.search);
 
 let config = {
     //parent: 'game',
+    canvasStyle: 'display: block;',
     type: Phaser.AUTO,
     width: 800,
     height: 600,
@@ -32,10 +33,6 @@ let config = {
             debug: false
         }
     },*/
-    scale: {
-        mode: Phaser.Scale.NONE,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
     scene: [ new Initialize(urlQueryParams.get('mode')), MainMenu, Play, Credits ]
 }
 

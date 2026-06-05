@@ -1,6 +1,8 @@
 // Family Photo by Eric Welch and Nick Marigo
 
 // Sounds:
+// 'Say Cheese' sound by Nathan Altice
+// 'Cheese' sound by Amory, Christain, Micheal, Robert, Max, Eric, and Nick
 // Correct and Incorrect sound by LaurenPonder: https://freesound.org/people/LaurenPonder/sounds/635643/
 // Camera sound by theplax: https://freesound.org/people/theplax/sounds/624937/
 // Background Music by JonLakeMusic: https://freesound.org/people/JonLakeMusic/sounds/767358/

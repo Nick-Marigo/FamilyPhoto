@@ -167,14 +167,23 @@ class Play extends Phaser.Scene {
             return;
         }
 
+        const gameWon = this.happyFaces == this.familyFaces.length;
+
         this.familyFaces.forEach(face => face.reset());
         this.happyFaces = 0;
         this.isGradingFaces = false;
-        this.score.setVisible(false);
-        this.gameTimer.paused = false;
-        this.guaranteedSmileTimer.paused = false;
-        this.cameraOverlay.setVisible(true);
         this.showButtons(false);
+        this.score.setVisible(false);
+
+        if (gameWon) {
+            this.setGameOver();
+            this.gameOverText.text = "What a happy family!\nEveryone wins!"
+            this.progressRing.setVisible(false);
+        } else {
+            this.gameTimer.paused = false;
+            this.guaranteedSmileTimer.paused = false;
+            this.cameraOverlay.setVisible(true);
+        }
     }
 
     isFinishedGradingFaces() {

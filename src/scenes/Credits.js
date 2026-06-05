@@ -1,5 +1,7 @@
 const creditsHeader = 'Produced by';
 const creditsAuthors ='Nick Marigo\nEric Welch';
+const creditsSayCheese = '"Say Cheese" said\nby Nathan Altice';
+const creditsCheese = '"Cheese" said by Amory,\nChristain, Micheal, Robert,\nMax, Eric, and Nick';
 
 // http://127.0.0.1:5500/?mode=creditsScene
 // https://.github.io//?mode=creditsScene
@@ -19,11 +21,11 @@ class Credits extends Phaser.Scene {
     }
 
     createTitle() {
-        const textPos = canvasPos(0.5, 0.4);
+        const textPos = canvasPos(0.5, 0.2);
 
         const headerStyle = {
             fontSize: '80px',
-            fontFamily: 'Vito_bold', // FIXME customize font
+            fontFamily: 'Vito_bold',
             color: '#000',
             align: 'center'
         };
@@ -33,19 +35,33 @@ class Credits extends Phaser.Scene {
 
         const authorsStyle = {
             fontSize: '64px',
-            fontFamily: 'Vito_bold', // FIXME customize font
+            fontFamily: 'Vito_bold',
             color: '#000',
             align: 'center'
         };
 
         this.authorsText = this.add.text(...textPos, creditsAuthors, authorsStyle)
         this.authorsText.setOrigin(0.5, 0.0);
+
+        const soundStyle = {
+            fontSize: '32px',
+            fontFamily: 'Vito_bold',
+            color: '#000',
+            align: 'center'
+        };
+
+        
+        this.soundTextOne = this.add.text(width / 2, 275, creditsSayCheese, soundStyle)
+        this.soundTextOne.setOrigin(0.5, 0.0);
+
+        this.soundTextTwo = this.add.text(width / 2, 350, creditsCheese, soundStyle)
+        this.soundTextTwo.setOrigin(0.5, 0.0);
     }
 
     createExitButton() {
         const buttonTextStyle = {
             fontSize: '48px',
-            fontFamily: 'Vito_bold', // FIXME customize font
+            fontFamily: 'Vito_bold',
             color: '#000',
             align: 'center',
             padding: 4

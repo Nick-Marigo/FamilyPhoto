@@ -22,7 +22,7 @@ class Credits extends Phaser.Scene {
     }
 
     createTitle() {
-        const textPos = canvasPos(0.5, 0.15);
+        const textPos = canvasPos(0.5, 0.1375);
 
         const headerStyle = {
             fontSize: '64px',
@@ -52,11 +52,9 @@ class Credits extends Phaser.Scene {
         };
 
         
-        this.soundTextOne = this.add.text(width / 2, 200, creditsSayCheese, soundStyle)
-        this.soundTextOne.setOrigin(0.5, 0.0);
+        this.add.text(width / 2, 205, creditsSayCheese, soundStyle).setOrigin(0.5, 0.0);
 
-        this.soundTextTwo = this.add.text(width / 2, 255, creditsCheese, soundStyle)
-        this.soundTextTwo.setOrigin(0.5, 0.0);
+        this.add.text(width / 2, 275, creditsCheese, soundStyle).setOrigin(0.5, 0.0);
 
         const otherCredits = {
             fontSize: '20px',
@@ -65,8 +63,7 @@ class Credits extends Phaser.Scene {
             align: 'center'
         };
 
-        this.soundTextOne = this.add.text(width / 2, 350, creditsOther, otherCredits)
-        this.soundTextOne.setOrigin(0.5, 0.0);
+        this.add.text(width / 2, 370, creditsOther, otherCredits).setOrigin(0.5, 0.0);
     }
 
     createExitButton() {
@@ -78,7 +75,7 @@ class Credits extends Phaser.Scene {
             padding: 4
         };
 
-        this.createButton('Back to Main Menu', ...canvasPos(0.5, 0.9), buttonTextStyle, this.exitCredits);
+        this.createButton('Back to Main Menu', ...canvasPos(0.5, 0.925), buttonTextStyle, this.exitCredits);
     }
 
     exitCredits() {

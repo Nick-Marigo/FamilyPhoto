@@ -17,7 +17,7 @@ let config = {
     width: 800,
     height: 600,
     parent: 'game',
-    backgroundColor: '#FACADE',
+    backgroundColor: '#FFF',
     render: {
         pixelArt: true
     },
